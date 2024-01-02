@@ -27,6 +27,7 @@ class ExperienceReplay():
         self
     ):
         batch = random.sample(self.memory, self.batch_size)
+        return batch
 
     def can_provide_sample(self):
         return len(self.memory) >= self.batch_size

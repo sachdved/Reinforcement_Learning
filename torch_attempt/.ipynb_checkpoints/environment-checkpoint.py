@@ -61,11 +61,11 @@ class Environment:
 
         previous_location = self.agent_location
 
-        old_distance = torch.abs(previous_location[0] - self.goal_location[0]) + torch.abs(previous_location[1] - self.goal_location[1])
+        previous_distance = torch.abs(previous_location[0] - self.goal_location[0]) + torch.abs(previous_location[1] - self.goal_location[1])
 
         reward = 0
 
-        move = actions[action]
+        move = actions[int(action)]
 
         new_location = (previous_location[0] + move[0], previous_location[1] + move[1])
 
@@ -77,16 +77,16 @@ class Environment:
 
             new_distance = torch.abs(new_location[0] - self.goal_location[0]) + torch.abs(new_location[1] - self.goal_location[1])
 
-            done = False
+            done = torch.tensor(False)
             
             if self.agent_location == self.goal_location:
-                done = True
-                reward = 100
+                done = torch.tensor(True)
+                reward = torch.tensor(100)
             else:
-                reward = previous_distance - new_distance - 0.1
+                reward = (previous_distance - new_distance - 0.1)[0]
         else:
-            done = False
-            reward = -3
+            done = torch.tensor(False)
+            reward = torch.tensor(-3)
 
         return reward, done
         
